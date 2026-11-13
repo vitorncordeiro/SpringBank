@@ -1,0 +1,10 @@
+package br.pucpr.banco.pagamento.enums;
+
+public enum StatusPagamento {
+    INICIADO,
+    VALOR_RESERVADO,
+    CONFIRMADO_BC,
+    PAGO,
+    RECUSADO_SALDO_INSUFICIENTE,
+    FALHA
+}

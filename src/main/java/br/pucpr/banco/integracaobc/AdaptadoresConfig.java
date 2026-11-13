@@ -1,5 +1,7 @@
 package br.pucpr.banco.integracaobc;
 
+import br.pucpr.banco.integracaobc.dto.AdaptadorSimulado;
+import br.pucpr.banco.integracaobc.enums.OperacaoBc;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

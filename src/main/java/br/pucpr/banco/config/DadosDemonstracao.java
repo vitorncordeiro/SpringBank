@@ -1,10 +1,10 @@
 package br.pucpr.banco.config;
 
-import br.pucpr.banco.autenticacao.Usuario;
-import br.pucpr.banco.autenticacao.UsuarioRepository;
-import br.pucpr.banco.autenticacao.UsuarioService;
-import br.pucpr.banco.conta.Conta;
-import br.pucpr.banco.conta.ContaService;
+import br.pucpr.banco.autenticacao.model.Usuario;
+import br.pucpr.banco.autenticacao.repository.UsuarioRepository;
+import br.pucpr.banco.autenticacao.service.UsuarioService;
+import br.pucpr.banco.conta.model.Conta;
+import br.pucpr.banco.conta.service.ContaService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
