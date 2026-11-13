@@ -6,6 +6,7 @@ import br.pucpr.banco.pagamento.dto.PixRequest;
 import br.pucpr.banco.pagamento.dto.SaldoRequest;
 import br.pucpr.banco.pagamento.service.PagamentoService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pagamentos")
+@RequiredArgsConstructor
 public class PagamentoController {
 
     private final PagamentoService service;
-
-    public PagamentoController(PagamentoService service) {
-        this.service = service;
-    }
 
     @PostMapping("/pix")
     @ResponseStatus(HttpStatus.CREATED)

@@ -11,24 +11,19 @@ import br.pucpr.banco.transferencia.model.TransferenciaPix;
 import br.pucpr.banco.transferencia.model.TransferenciaTed;
 import br.pucpr.banco.transferencia.enums.StatusTransferencia;
 import br.pucpr.banco.transferencia.repository.TransferenciaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TransferenciaService {
 
     private final TransferenciaRepository repository;
     private final ContaService contaService;
     private final IntegracaoBancoCentralService integracao;
-
-    public TransferenciaService(TransferenciaRepository repository, ContaService contaService,
-                               IntegracaoBancoCentralService integracao) {
-        this.repository = repository;
-        this.contaService = contaService;
-        this.integracao = integracao;
-    }
 
     public Transferencia transferirPix(Long contaOrigemId, BigDecimal valor, String chavePix) {
         return executar(new TransferenciaPix(contaOrigemId, valor, chavePix));

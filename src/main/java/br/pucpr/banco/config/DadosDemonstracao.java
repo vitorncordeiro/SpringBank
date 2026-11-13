@@ -5,6 +5,7 @@ import br.pucpr.banco.autenticacao.repository.UsuarioRepository;
 import br.pucpr.banco.autenticacao.service.UsuarioService;
 import br.pucpr.banco.conta.model.Conta;
 import br.pucpr.banco.conta.service.ContaService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -13,17 +14,12 @@ import java.math.BigDecimal;
 
 @Component
 @ConditionalOnProperty(name = "banco.seed", havingValue = "true", matchIfMissing = true)
+@RequiredArgsConstructor
 public class DadosDemonstracao implements CommandLineRunner {
 
     private final UsuarioRepository usuarios;
     private final UsuarioService usuarioService;
     private final ContaService contaService;
-
-    public DadosDemonstracao(UsuarioRepository usuarios, UsuarioService usuarioService, ContaService contaService) {
-        this.usuarios = usuarios;
-        this.usuarioService = usuarioService;
-        this.contaService = contaService;
-    }
 
     @Override
     public void run(String... args) {

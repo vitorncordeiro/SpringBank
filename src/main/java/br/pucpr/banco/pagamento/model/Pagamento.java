@@ -3,6 +3,7 @@ package br.pucpr.banco.pagamento.model;
 import br.pucpr.banco.integracaobc.enums.OperacaoBc;
 import br.pucpr.banco.pagamento.enums.StatusPagamento;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -23,6 +24,7 @@ public abstract class Pagamento {
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal valor;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 40)
     private StatusPagamento status = StatusPagamento.INICIADO;

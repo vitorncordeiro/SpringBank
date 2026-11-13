@@ -3,6 +3,7 @@ package br.pucpr.banco.transferencia.model;
 import br.pucpr.banco.integracaobc.enums.OperacaoBc;
 import br.pucpr.banco.transferencia.enums.StatusTransferencia;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -23,6 +24,7 @@ public abstract class Transferencia {
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal valor;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 40)
     private StatusTransferencia status = StatusTransferencia.INICIADA;

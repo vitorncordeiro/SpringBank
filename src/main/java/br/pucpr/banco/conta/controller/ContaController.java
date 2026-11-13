@@ -7,6 +7,7 @@ import br.pucpr.banco.conta.dto.MovimentacaoResponse;
 import br.pucpr.banco.conta.dto.SaldoConta;
 import br.pucpr.banco.conta.service.ContaService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/contas")
+@RequiredArgsConstructor
 public class ContaController {
 
     private final ContaService service;
-
-    public ContaController(ContaService service) {
-        this.service = service;
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

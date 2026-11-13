@@ -9,6 +9,7 @@ import br.pucpr.banco.conta.dto.SaldoConta;
 import br.pucpr.banco.conta.enums.TipoMovimentacao;
 import br.pucpr.banco.conta.repository.ContaRepository;
 import br.pucpr.banco.conta.repository.MovimentacaoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,22 +17,22 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ContaService {
 
     private final ContaRepository contas;
     private final MovimentacaoRepository movimentacoes;
-
-    public ContaService(ContaRepository contas, MovimentacaoRepository movimentacoes) {
-        this.contas = contas;
-        this.movimentacoes = movimentacoes;
-    }
 
     @Transactional
     public Conta abrir(Long usuarioId, String agencia, String numero) {
         if (contas.existsByAgenciaAndNumero(agencia, numero)) {
             throw new IllegalArgumentException("Já existe a conta " + agencia + "/" + numero);
         }
-        return contas.save(new Conta(usuarioId, agencia, numero));
+        return contas.save(Conta.builder()
+                .usuarioId(usuarioId)
+                .agencia(agencia)
+                .numero(numero)
+                .build());
     }
 
     public Conta buscar(Long contaId) {
@@ -81,6 +82,12 @@ public class ContaService {
     }
 
     private void registrar(Conta conta, TipoMovimentacao tipo, BigDecimal valor, String referencia) {
-        movimentacoes.save(new Movimentacao(conta, tipo, Dinheiro.positivo(valor), referencia));
+        movimentacoes.save(Movimentacao.builder()
+                .conta(conta)
+                .tipo(tipo)
+                .valor(Dinheiro.positivo(valor))
+                .saldoApos(conta.getSaldo())
+                .referencia(referencia)
+                .build());
     }
 }

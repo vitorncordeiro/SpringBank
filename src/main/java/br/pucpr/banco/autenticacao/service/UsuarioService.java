@@ -3,20 +3,17 @@ package br.pucpr.banco.autenticacao.service;
 import br.pucpr.banco.autenticacao.model.Usuario;
 import br.pucpr.banco.autenticacao.repository.UsuarioRepository;
 import br.pucpr.banco.compartilhado.RecursoNaoEncontradoException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class UsuarioService {
 
     private final UsuarioRepository repository;
     private final PasswordEncoder passwordEncoder;
-
-    public UsuarioService(UsuarioRepository repository, PasswordEncoder passwordEncoder) {
-        this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Transactional
     public Usuario cadastrar(String nome, String cpf, String senha) {
@@ -27,7 +24,11 @@ public class UsuarioService {
         if (repository.existsByCpf(cpfNumerico)) {
             throw new IllegalArgumentException("CPF já cadastrado");
         }
-        return repository.save(new Usuario(nome, cpfNumerico, passwordEncoder.encode(senha)));
+        return repository.save(Usuario.builder()
+                .nome(nome)
+                .cpf(cpfNumerico)
+                .senhaHash(passwordEncoder.encode(senha))
+                .build());
     }
 
     public Usuario buscar(Long id) {

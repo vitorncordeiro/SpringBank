@@ -5,6 +5,7 @@ import br.pucpr.banco.transferencia.dto.PixRequest;
 import br.pucpr.banco.transferencia.dto.TransferenciaResponse;
 import br.pucpr.banco.transferencia.service.TransferenciaService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/transferencias")
+@RequiredArgsConstructor
 public class TransferenciaController {
 
     private final TransferenciaService service;
-
-    public TransferenciaController(TransferenciaService service) {
-        this.service = service;
-    }
 
     @PostMapping("/pix")
     @ResponseStatus(HttpStatus.CREATED)

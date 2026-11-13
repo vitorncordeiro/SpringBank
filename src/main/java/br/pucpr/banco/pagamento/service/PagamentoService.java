@@ -12,24 +12,19 @@ import br.pucpr.banco.pagamento.model.PagamentoPix;
 import br.pucpr.banco.pagamento.model.PagamentoSaldoConta;
 import br.pucpr.banco.pagamento.enums.StatusPagamento;
 import br.pucpr.banco.pagamento.repository.PagamentoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PagamentoService {
 
     private final PagamentoRepository repository;
     private final ContaService contaService;
     private final IntegracaoBancoCentralService integracao;
-
-    public PagamentoService(PagamentoRepository repository, ContaService contaService,
-                           IntegracaoBancoCentralService integracao) {
-        this.repository = repository;
-        this.contaService = contaService;
-        this.integracao = integracao;
-    }
 
     public Pagamento pagarPix(Long contaOrigemId, BigDecimal valor, String codigoQr) {
         if (codigoQr == null || codigoQr.isBlank()) {

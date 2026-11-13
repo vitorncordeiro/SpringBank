@@ -7,6 +7,7 @@ import br.pucpr.banco.integracaobc.dto.TituloBoleto;
 import br.pucpr.banco.integracaobc.enums.OperacaoBc;
 import br.pucpr.banco.integracaobc.enums.StatusMensagemBc;
 import br.pucpr.banco.integracaobc.repository.MensagemBancoCentralRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,16 +20,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class IntegracaoBancoCentralService {
 
     private final MensagemBancoCentralRepository repository;
     private final List<AdaptadorBancoCentral> adaptadores;
-
-    public IntegracaoBancoCentralService(MensagemBancoCentralRepository repository,
-                                        List<AdaptadorBancoCentral> adaptadores) {
-        this.repository = repository;
-        this.adaptadores = adaptadores;
-    }
 
     public String comunicar(OperacaoBc operacao, String chaveIdempotencia, String requisicao) {
         Optional<MensagemBancoCentral> existente = repository.findByChaveIdempotencia(chaveIdempotencia);
@@ -38,7 +34,11 @@ public class IntegracaoBancoCentralService {
         }
 
         MensagemBancoCentral mensagem = existente
-                .orElseGet(() -> repository.save(new MensagemBancoCentral(chaveIdempotencia, operacao, requisicao)));
+                .orElseGet(() -> repository.save(MensagemBancoCentral.builder()
+                        .chaveIdempotencia(chaveIdempotencia)
+                        .operacao(operacao)
+                        .requisicao(requisicao)
+                        .build()));
 
         try {
             Map<OperacaoBc, AdaptadorBancoCentral> adaptadoresMap = adaptadores.stream()

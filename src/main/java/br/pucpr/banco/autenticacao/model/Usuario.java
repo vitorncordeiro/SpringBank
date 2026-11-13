@@ -32,17 +32,12 @@ public class Usuario {
     @Column(name = "senha_hash", nullable = false, length = 100)
     private String senhaHash;
 
+    @Builder.Default
     @Column(nullable = false)
     private boolean ativo = true;
 
     @Column(name = "criado_em", nullable = false, updatable = false)
     private LocalDateTime criadoEm;
-
-    public Usuario(String nome, String cpf, String senhaHash) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.senhaHash = senhaHash;
-    }
 
     @PrePersist
     void antesDeInserir() {

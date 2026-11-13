@@ -4,6 +4,7 @@ import br.pucpr.banco.integracaobc.enums.OperacaoBc;
 import br.pucpr.banco.integracaobc.enums.StatusMensagemBc;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "mensagens_banco_central")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Builder
 public class MensagemBancoCentral {
 
@@ -32,6 +34,7 @@ public class MensagemBancoCentral {
     @Column(length = 2000)
     private String resposta;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private StatusMensagemBc status = StatusMensagemBc.PENDENTE;
@@ -42,17 +45,11 @@ public class MensagemBancoCentral {
     @Column(name = "atualizada_em", nullable = false)
     private LocalDateTime atualizadaEm;
 
-    protected MensagemBancoCentral() {
-    }
-
-    public MensagemBancoCentral(String chaveIdempotencia, OperacaoBc operacao, String requisicao) {
-        this.chaveIdempotencia = chaveIdempotencia;
-        this.operacao = operacao;
-        this.requisicao = requisicao;
-    }
-
     @PrePersist
     void antesDeInserir() {
+        if (status == null) {
+            status = StatusMensagemBc.PENDENTE;
+        }
         criadaEm = LocalDateTime.now();
         atualizadaEm = criadaEm;
     }

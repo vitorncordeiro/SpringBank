@@ -32,9 +32,11 @@ public class Conta {
     @Column(nullable = false, length = 20)
     private String numero;
 
+    @Builder.Default
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal saldo = BigDecimal.ZERO;
 
+    @Builder.Default
     @Column(name = "saldo_reservado", nullable = false, precision = 19, scale = 2)
     private BigDecimal saldoReservado = BigDecimal.ZERO;
 
@@ -43,12 +45,6 @@ public class Conta {
 
     @Column(name = "aberta_em", nullable = false, updatable = false)
     private LocalDateTime abertaEm;
-
-    public Conta(Long usuarioId, String agencia, String numero) {
-        this.usuarioId = usuarioId;
-        this.agencia = agencia;
-        this.numero = numero;
-    }
 
     @PrePersist
     void antesDeInserir() {

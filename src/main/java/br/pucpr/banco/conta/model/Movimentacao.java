@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "movimentacoes")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Builder
 public class Movimentacao {
 
@@ -41,14 +42,6 @@ public class Movimentacao {
 
     @Column(name = "criada_em", nullable = false, updatable = false)
     private LocalDateTime criadaEm;
-
-    public Movimentacao(Conta conta, TipoMovimentacao tipo, BigDecimal valor, String referencia) {
-        this.conta = conta;
-        this.tipo = tipo;
-        this.valor = valor;
-        this.saldoApos = conta.getSaldo();
-        this.referencia = referencia;
-    }
 
     @PrePersist
     void antesDeInserir() {
